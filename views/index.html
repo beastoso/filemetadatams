@@ -16,10 +16,16 @@
       <li>When I submit something, I will receive the file size in bytes within the JSON response.</li>
     </ul>
   </blockquote>
+    <h3>Sample data output:</h3>
+      <blockquote>
+      {"name":"AnimalFarm.pdf","size":238974,"status":"received"}
+    </blockquote>
   <br>
-  <form action="/upload" method="post">
+  <form action="/upload" method="post" enctype="multipart/form-data">
      <h3>Upload a file to find out its size:</h3>
-     <input type="file" name="submitted"><input type="submit" value="upload">
+     <input type="file" name="submitted">
+    <br>
+    <input type="submit" value="upload">
   </form>
   </div>
 </body>

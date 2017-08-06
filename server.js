@@ -35,20 +35,23 @@ app.route('/').get(function(req, res) {
 		  res.sendFile(process.cwd() + '/views/index.html');
     });
 
-app.route('/upload').post(upload.single('submitted'), function(req, res) {
+app.post('/upload', upload.single('submitted'), function(req, res) {
   
-  return res.send(req);
-      if (!req.file) {
-        return res.send("File not uploaded");
-      }
+  if (!req.file) {
+    return res.send("File not uploaded");
+  }
+
+  var fileMetaData = {
+    name: req.file.originalname,
+    size: req.file.size,
+    status: 'received'
+  }
   
-      var fileMetaData = {
-        name: req.file.originalname,
-        size: req.file.size,
-        status: 'received'
-      }
-		  res.send(JSON.stringify(fileMetaData));
-    });
+  fs.unlink(process.cwd()+'/public/uploads/'+req.file.filename, function(err){
+    if (err) res.send(err);
+    res.send(JSON.stringify(fileMetaData));
+  });
+});
 
 // Respond not found to all the wrong routes
 app.use(function(req, res, next){
